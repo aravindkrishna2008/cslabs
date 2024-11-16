@@ -1,0 +1,30 @@
+while (!mailbox.isEmpty())
+        {
+            Message temp = mailbox.remove();
+            String item = temp.getText().substring(5);
+
+            if (temp.getText().contains("need"))
+            {
+                if (countPossessions(item) > 1)
+                {
+                    reply(temp.getSender(), "have " + item);
+                }
+            }
+            else if (temp.getText().contains("have"))
+            {
+                if (countPossessions(item) < 1)
+                {
+                    reply(temp.getSender(), "ship " + item);
+                }
+            }
+            else if (temp.getText().contains("ship"))
+            {
+                if (countPossessions(item) > 0)
+                {
+                    if (temp.getSender().receiveItem(this, item))
+                    {
+                        myPossessions.remove(item);
+                    }
+                }
+            }
+        }
